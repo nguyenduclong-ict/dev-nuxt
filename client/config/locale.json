@@ -1,0 +1,28 @@
+{
+  "Khởi tạo dự án": {},
+  "User not exist": {
+    "vi": "Tài khoản không tồn tại"
+  },
+
+  "createdAt": {
+    "vi": "Ngày tạo"
+  },
+  "Created At": {
+    "vi": "Ngày tạo"
+  },
+  "updatedAt": {
+    "vi": "Cập nhật"
+  },
+  "Updated At": {
+    "vi": "Cập nhật"
+  },
+  "Username": {
+    "vi": "Tên người dùng"
+  },
+  "User": {
+    "vi": "Người dùng"
+  },
+  "Role": {
+    "vi": "Vai trò"
+  }
+}

@@ -1,0 +1,17 @@
+export const ROUTES = {
+  Home: 'Home',
+  ADMIN: 'Admin',
+  ADMIN_DASHBOARD: 'AdminDashboard',
+  ADMIN_INIT: 'AdminInit',
+  ADMIN_ROLES: 'AdminRoles',
+  ADMIN_USERS: 'AdminUsers',
+  ADMIN_USERS_PERMISSION: 'AdminUsersPermission',
+  ADMIN_ROLES_PERMISSION: 'AdminRolesPermission',
+  ADMIN_LOGIN: 'AdminLogin',
+  ADMIN_REGISTER: 'AdminRegister',
+  ADMIN_ENTITY: 'AdminEntity',
+  ADMIN_ENTITY_DETAIL: 'AdminEntityDetail',
+  ADMIN_FORGOT_PASSWORD: 'AdminForgotPassword',
+  ADMIN_RESET_PASSWORD: 'AdminResetPassword',
+  REDIRECT: 'Redirect',
+}
