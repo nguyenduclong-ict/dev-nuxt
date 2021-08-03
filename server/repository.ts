@@ -3,8 +3,6 @@ import {
   ConfigRepository,
   EntityPermissionRepository,
   FileRepository,
-  FormRepository,
-  NewRepository,
   PermissionRepository,
   RoleRepository,
   TokenRepository,
@@ -18,5 +16,3 @@ export const roleRepository = new RoleRepository(connection)
 export const permissionRepository = new PermissionRepository(connection)
 export const entityPermission = new EntityPermissionRepository(connection)
 export const fileRepository = new FileRepository(connection)
-export const newRepository = new NewRepository(connection)
-export const formRepository = new FormRepository(connection)

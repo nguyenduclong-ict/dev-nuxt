@@ -1,10 +1,7 @@
 import { CronJob } from 'cron'
-import { newCronjob } from './news.cronjob'
 
 export const startCronjobs = () => {
-  const cronjobs: { [x: string]: CronJob } = {
-    newCronjob,
-  }
+  const cronjobs: { [x: string]: CronJob } = {}
 
   Object.keys(cronjobs).forEach((key) => {
     console.log(`start cronjob [${key}]`)
