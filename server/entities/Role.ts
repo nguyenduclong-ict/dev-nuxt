@@ -1,4 +1,11 @@
-import { Entity, Field, Repository, repository } from '@nguyenduclong/mongodbts'
+import {
+  After,
+  Entity,
+  Field,
+  FindOneContext,
+  Repository,
+  repository,
+} from '@nguyenduclong/mongodbts'
 import { Schema } from 'mongoose'
 import { EntityPermission } from './EntityPermission'
 
@@ -30,6 +37,7 @@ export class RoleRepository extends Repository<Role> {
       ref: 'EntityPermission',
       foreignField: 'entity',
       localField: '_id',
+      justOne: false,
     })
     return schema
   }

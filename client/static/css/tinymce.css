@@ -1,0 +1,23 @@
+img.image__w-full {
+  width: 100%;
+}
+img.image__w-50pt {
+  width: 50%;
+}
+img.image__w-auto {
+  width: auto;
+}
+
+img:not([width]) {
+  width: 100%;
+}
+
+.mce-content-body {
+  font-size: 14px;
+  font-family: 'Roboto', 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+a {
+  color: #181cef;
+}

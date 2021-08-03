@@ -302,8 +302,8 @@ import { EntityDeclaration } from '@/server/helpers/repository'
 import { RegistedApi } from '@/server/helpers/router'
 import { cloneDeep } from '@/utils/lodash'
 import Vue from 'vue'
+import { buildParams } from '@/utils/client'
 import BackButton from '~/components/Admin/Common/BackButton.vue'
-import { buildParams } from '~/utils/client'
 
 interface Data {
   permissions: Permission[] // all permissions
@@ -335,10 +335,7 @@ export default Vue.extend({
             id: params.id,
           },
           populates: [
-            {
-              path: 'permissions',
-              populate: 'permission' as any,
-            },
+            { path: 'permissions', populate: { path: 'permission' } },
           ],
         }),
       }) as Promise<Role>,

@@ -86,7 +86,14 @@ export const GetUserInfo: RequestHandler = async (req, res, next) => {
         name: DefaultRole.GUEST,
         isDefault: true,
       },
-      populates: ['permissions'],
+      populates: [
+        {
+          path: 'permissions',
+          populate: {
+            path: 'permission',
+          },
+        },
+      ],
     })
 
     userPermissions.push(...guestRole.permissions)
@@ -96,6 +103,7 @@ export const GetUserInfo: RequestHandler = async (req, res, next) => {
 
   const authHelper = new PermissionHelper(user)
   authHelper.userPermissions = userPermissions
+  authHelper.permissions = userPermissions
   req.meta.permissions = userPermissions
   req.meta.auth = authHelper
   req.meta.__get_user_info__ = true // set flag is called

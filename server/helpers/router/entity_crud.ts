@@ -1,5 +1,5 @@
 import { PermissionAction } from '@/server/constants'
-import { hasEntityPermission } from '@/server/middlewares/auth'
+import { GetUserInfo, hasEntityPermission } from '@/server/middlewares/auth'
 import { kebabCase } from '@/utils/lodash'
 import { joinUrl } from '@/utils/utils'
 import { Repository } from '@nguyenduclong/mongodbts'
@@ -15,6 +15,17 @@ import {
 import { createApi } from './create_api'
 import { MergeParams, ParseQuery, ValidateRequestParams } from './middleware'
 
+export const setSeachQuery = (ctx) => {
+  const { search, strict } = ctx
+
+  if (search) {
+    ctx.query = ctx.query || {}
+    ctx.query.$text = {
+      $search: strict ? '"' + search + '"' : search,
+    }
+  }
+}
+
 export const entityCrud = (
   api: ReturnType<typeof createApi>,
   repository: Repository
@@ -26,6 +37,7 @@ export const entityCrud = (
   // ===== list =====
   router.get(
     endpoint,
+    GetUserInfo,
     hasEntityPermission(repository.name, PermissionAction.READ),
     ParseQuery,
     MergeParams(),
@@ -33,6 +45,7 @@ export const entityCrud = (
     async (req, res, next) => {
       try {
         const ctx: ParamsList = req.data
+        setSeachQuery(ctx)
         const data = await repository.list(ctx as any)
         res.json(data)
       } catch (error) {
@@ -47,6 +60,7 @@ export const entityCrud = (
   // ===== find =====
   router.get(
     joinUrl(endpoint, '/find'),
+    GetUserInfo,
     hasEntityPermission(repository.name, PermissionAction.READ),
     ParseQuery,
     MergeParams(),
@@ -54,6 +68,7 @@ export const entityCrud = (
     async (req, res) => {
       try {
         const ctx: ParamsList = req.data
+        setSeachQuery(ctx)
         const data = await repository.find(ctx as any)
         res.json(data)
       } catch (error) {
@@ -68,6 +83,7 @@ export const entityCrud = (
   // ===== findOne =====
   router.get(
     joinUrl(endpoint, '/find-one'),
+    GetUserInfo,
     hasEntityPermission(repository.name, PermissionAction.READ),
     ParseQuery,
     MergeParams(),
@@ -75,7 +91,8 @@ export const entityCrud = (
     async (req, res) => {
       try {
         const ctx: ParamsList = req.data
-        const data = await repository.findOne(ctx)
+        setSeachQuery(ctx)
+        const data = await repository.findOne(ctx as any)
         res.json(data)
       } catch (error) {
         logger.error(error)
@@ -89,6 +106,7 @@ export const entityCrud = (
   // ===== create =====
   router.post(
     endpoint,
+    GetUserInfo,
     hasEntityPermission(repository.name, PermissionAction.CREATE),
     MergeParams(),
     ValidateRequestParams(ParamsCreate),
@@ -114,6 +132,7 @@ export const entityCrud = (
   // ===== createMany =====
   router.post(
     endpoint + '/bulk-create',
+    GetUserInfo,
     hasEntityPermission(repository.name, PermissionAction.CREATE),
     MergeParams(),
     ValidateRequestParams(ParamsCreateMany),
@@ -141,6 +160,7 @@ export const entityCrud = (
   // ===== update =====
   router.put(
     endpoint,
+    GetUserInfo,
     hasEntityPermission(repository.name, PermissionAction.UPDATE),
     MergeParams(),
     ValidateRequestParams(ParamsUpdate),
@@ -166,6 +186,7 @@ export const entityCrud = (
   // ===== updateOne =====
   router.put(
     endpoint + '/:id',
+    GetUserInfo,
     hasEntityPermission(repository.name, PermissionAction.UPDATE),
     MergeParams({ paramsIdToQuery: true }),
     ValidateRequestParams(ParamsUpdate),
@@ -191,6 +212,7 @@ export const entityCrud = (
   // ===== deleteOne =====
   router.delete(
     endpoint + '/:id',
+    GetUserInfo,
     hasEntityPermission(repository.name, PermissionAction.DELETE),
     ParseQuery,
     MergeParams({ paramsIdToQuery: true }),
@@ -198,6 +220,9 @@ export const entityCrud = (
     async (req, res) => {
       try {
         const ctx: ParamsDelete = req.data
+        ctx.query = {
+          id: req.data.id,
+        }
         const data = await repository.deleteOne(ctx)
         res.json(data)
       } catch (error) {
@@ -212,6 +237,7 @@ export const entityCrud = (
   // ===== update =====
   router.delete(
     endpoint + '/',
+    GetUserInfo,
     hasEntityPermission(repository.name, PermissionAction.DELETE),
     ParseQuery,
     MergeParams(),

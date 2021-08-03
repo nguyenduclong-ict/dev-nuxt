@@ -7,6 +7,7 @@ import { sendValidateError } from '../errors'
 
 export const ParseQuery: RequestHandler = (req, res, next) => {
   const query = req.query
+
   if (!query) return next()
   const keys = [
     'query',
@@ -20,11 +21,14 @@ export const ParseQuery: RequestHandler = (req, res, next) => {
     'sort',
     'limit',
     'skip',
+    'strict',
   ]
 
   Object.keys(query).forEach((key) => {
     if (query[key] && typeof query[key] === 'string' && keys.includes(key)) {
-      if (['page', 'pageSize', 'skip', 'limit'].includes(key)) {
+      if (['strict'].includes(key)) {
+        set(query, key, true)
+      } else if (['page', 'pageSize', 'skip', 'limit'].includes(key)) {
         set(query, key, Number(query[key]))
       } else if (['exact', 'softDelete'].includes(key)) {
         set(query, key, parseBool(query[key]))
@@ -33,6 +37,16 @@ export const ParseQuery: RequestHandler = (req, res, next) => {
           query[key] = JSON.parse(query[key] as string)
         } catch (error) {}
       }
+    } else if (Array.isArray(query[key])) {
+      query[key] = (query[key] as any).map((e) => {
+        let v = e
+        if (typeof e === 'string') {
+          try {
+            v = JSON.parse(query[key] as string)
+          } catch (error) {}
+        }
+        return v
+      })
     }
   })
 

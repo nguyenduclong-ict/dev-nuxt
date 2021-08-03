@@ -1,7 +1,3 @@
-<template>
-  <div></div>
-</template>
-
 <script lang="ts">
 import Vue from 'vue'
 import { match } from 'path-to-regexp'

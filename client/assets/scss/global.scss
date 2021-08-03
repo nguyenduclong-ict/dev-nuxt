@@ -68,3 +68,19 @@ div {
 input {
   outline: none;
 }
+
+.scrollbar:hover::-webkit-scrollbar,
+.scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 6px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-gray-300;
+  border-radius: 3px;
+  height: 90px;
+}

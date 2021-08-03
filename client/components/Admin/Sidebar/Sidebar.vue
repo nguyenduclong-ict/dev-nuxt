@@ -88,7 +88,7 @@ export default Vue.extend({
   background-color: $menuBg;
   left: 0;
   top: 0;
-  transition: all 0.3s;
+  transition: width 0.3s;
   width: $sideBarWidth;
   z-index: 1000;
 
@@ -102,7 +102,7 @@ export default Vue.extend({
 
   @media screen and (max-width: 640px) {
     // mobile
-    transition: all 0.5s;
+    transition: width 0.5s;
     position: fixed;
     top: 0;
     left: 0;

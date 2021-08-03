@@ -7,8 +7,6 @@ const api = createApi(router, '/file')
 
 api.get('/:name', MergeParams(), GetFileController.init())
 
-// api.get('/')
-
 export default {
   path: '/file',
   router,

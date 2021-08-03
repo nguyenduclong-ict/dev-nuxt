@@ -3,7 +3,7 @@ import { Context } from '@nuxt/types'
 import { Permission } from '@/server/entities'
 
 export const loadPage = (path: string) => {
-  return join(__dirname, '../../pages', path)
+  return process.cwd() + '/client/pages/' + path
 }
 
 export interface RouteItem {

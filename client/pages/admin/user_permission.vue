@@ -303,9 +303,9 @@ import { EntityDeclaration } from '@/server/helpers/repository'
 import { RegistedApi } from '@/server/helpers/router'
 import { cloneDeep } from '@/utils/lodash'
 import Vue from 'vue'
+import { buildParams } from '@/utils/client'
 import BackButton from '~/components/Admin/Common/BackButton.vue'
 import { ROUTES } from '~/config'
-import { buildParams } from '~/utils/client'
 
 interface Data {
   permissions: Permission[] // all permissions

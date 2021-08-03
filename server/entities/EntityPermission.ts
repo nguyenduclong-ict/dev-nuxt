@@ -5,7 +5,7 @@ import {
   Repository,
   repository,
 } from '@nguyenduclong/mongodbts'
-import { SchemaTypes } from 'mongoose'
+import { Schema, SchemaTypes } from 'mongoose'
 import { Permission } from './Permission'
 
 @Entity({ timestamps: true, autoIndex: true })
@@ -39,7 +39,4 @@ export interface EntityPermissionOptions {
 }
 
 @repository(EntityPermission)
-export class EntityPermissionRepository extends Repository<EntityPermission> {
-  test() {
-  }
-}
+export class EntityPermissionRepository extends Repository<EntityPermission> {}

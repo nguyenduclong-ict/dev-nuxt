@@ -1,7 +1,8 @@
 import { connection } from '@/server/config/mongo'
-import { kebabCase, pick, set, get } from '@/utils/lodash'
-import { Repository, KEYS } from '@nguyenduclong/mongodbts'
+import { get, kebabCase, pick, set } from '@/utils/lodash'
+import { KEYS, Repository } from '@nguyenduclong/mongodbts'
 import { getMetadataStorage, ValidationTypes } from 'class-validator'
+import { FIELD_OPTIONS } from './constants'
 
 interface ValidateItem {
   name: string
@@ -33,6 +34,7 @@ export interface SchemaField {
   ref?: string
   enum?: any[]
   validate?: ValidateItem[]
+  props: any
 }
 
 export class EntityHelper {
@@ -71,11 +73,24 @@ export class EntityHelper {
 
     // get schema
     const validateSchema = this.getEntityValidate(repository.entityCls)
-    const schema = Reflect.getMetadata(KEYS.SCHEMA_RAW, repository.entityCls)
+    const schema =
+      Reflect.getMetadata(KEYS.SCHEMA_RAW, repository.entityCls) || {}
+
+    // console.log(schema)
 
     Object.keys(schema).forEach((key) => {
       if (validateSchema[key]) {
         set(schema, `${key}.validate`, validateSchema[key])
+      }
+
+      const fieldOptions = Reflect.getMetadata(
+        FIELD_OPTIONS,
+        repository.entityCls,
+        key
+      )
+
+      if (fieldOptions) {
+        Object.assign(schema[key], fieldOptions)
       }
     })
 

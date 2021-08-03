@@ -8,6 +8,7 @@ import {
   repository,
 } from '@nguyenduclong/mongodbts'
 import { Schema, SchemaTypes } from 'mongoose'
+import { FieldOption } from '../helpers/repository'
 import { EntityPermission } from './EntityPermission'
 import { Role } from './Role'
 
@@ -25,6 +26,10 @@ export class User {
 
   @Field({ type: String })
   email?: string
+
+  @Field({ type: String })
+  @FieldOption({ type: 'GalleryPicker' })
+  avatar?: String
 
   @Field({ type: Boolean, default: false })
   isAdmin: boolean

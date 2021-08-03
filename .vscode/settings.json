@@ -1,0 +1,9 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "css.validate": false,
+  "scss.validate": false,
+  "vetur.validation.style": false,
+  "editor.formatOnSave": true
+}

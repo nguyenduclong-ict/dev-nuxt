@@ -1,5 +1,5 @@
-import url from 'url'
 import path from 'path'
+import fs from 'fs'
 import cors from 'cors'
 import express, { ErrorRequestHandler, RequestHandler } from 'express'
 import morgan from 'morgan'
@@ -8,6 +8,8 @@ import './config/mongo'
 import { INTERNAL_SERVER_ERROR, NOT_FOUND, sendError } from './helpers/errors'
 import { registerRoutes } from './helpers/router'
 import { initRolesAndPermissions } from './seeders/roles_permissions'
+import { initFolder } from './helpers/multer'
+import { startCronjobs } from './cronjob'
 
 const app = express()
 
@@ -45,5 +47,7 @@ app.use(handle404)
 app.use(handleError)
 
 initRolesAndPermissions()
+initFolder()
+startCronjobs()
 
 export default app

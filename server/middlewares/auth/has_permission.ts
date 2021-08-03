@@ -58,7 +58,7 @@ export const hasEntityPermission = (
     if (!auth) return sendError(res, UNAUTHORIZED)
 
     if (auth.isAdmin) return next()
-    if (!auth.isAuthenticated) return sendError(res, FORBIDDEN)
+    // if (!auth.isAuthenticated) return sendError(res, FORBIDDEN)
     const permission = auth.hasPermission(
       ...actions.map((action) => ({
         type: PermissionType.ENTITY,

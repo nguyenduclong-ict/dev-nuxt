@@ -36,20 +36,29 @@ export class ParamsDelete {
 export class ParamsList {
   // @IsOptional()
   // @IsObject()
-  // query: any
+  query: any
+
   // @IsOptional()
   // @IsArray()
-  // populates: any[]
+  populates: any[]
+
   // @IsOptional()
   // @IsArray()
-  // sort: any[]
+  sort: any[]
+
   // @IsOptional()
   // @IsArray()
-  // fields: string[]
+  fields: string[]
+
   // @IsOptional()
   // @IsNumber()
-  // page: number
+  page: number
+
   // @IsOptional()
   // @IsNumber()
-  // pageSize: number
+  pageSize: number
+
+  search?: string
+
+  strict?: string // search strict
 }

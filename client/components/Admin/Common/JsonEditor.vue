@@ -6,14 +6,10 @@
 
 <script>
 import CodeMirror from 'codemirror'
-import 'codemirror/addon/lint/lint.css'
 import 'codemirror/lib/codemirror.css'
-import 'codemirror/theme/rubyblue.css'
+import 'codemirror/theme/base16-dark.css'
 import 'codemirror/mode/javascript/javascript'
-import 'codemirror/addon/lint/lint'
-import 'codemirror/addon/lint/json-lint'
-// eslint-disable-next-line import/no-webpack-loader-syntax
-require('script-loader!jsonlint')
+
 export default {
   name: 'JsonEditor',
   /* eslint-disable vue/require-prop-types */
@@ -33,13 +29,10 @@ export default {
   },
   mounted() {
     this.jsonEditor = CodeMirror.fromTextArea(this.$refs.textarea, {
-      lineNumbers: true,
       mode: 'application/json',
-      gutters: ['CodeMirror-lint-markers'],
-      theme: 'rubyblue',
-      lint: true,
+      theme: 'base16-dark',
     })
-    this.jsonEditor.setValue(JSON.stringify(this.value, null, 2))
+    this.jsonEditor.setValue(JSON.stringify(this.value || null, null, 2))
     this.jsonEditor.on('change', (cm) => {
       this.$emit('changed', cm.getValue())
       this.$emit('input', cm.getValue())
@@ -53,22 +46,14 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .json-editor {
   height: 100%;
   position: relative;
   display: inline-block;
-  ::v-deep {
-    .CodeMirror {
-      height: auto;
-      min-height: 300px;
-    }
-    .CodeMirror-scroll {
-      min-height: 300px;
-    }
-    .cm-s-rubyblue span.cm-string {
-      color: #f08047;
-    }
+
+  .CodeMirror-line {
+    line-height: 16px !important;
   }
 }
 </style>

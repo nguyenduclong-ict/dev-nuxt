@@ -26,8 +26,8 @@
 
 <script lang="tsx">
 import Vue from 'vue'
+import { equalToField } from '@/utils/client/validate'
 import Form from '~/components/Admin/Common/Form.vue'
-import { equalToField } from '~/utils/client/validate'
 
 export default Vue.extend({
   auth: false,

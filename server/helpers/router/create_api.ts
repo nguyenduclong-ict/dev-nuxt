@@ -18,6 +18,7 @@ export function registerRoutes(dir: string, app: Express) {
 
   for (const path of paths) {
     const module: RouterModule | RouterModule[] = require(path).default
+    if (!module) continue
     if (Array.isArray(module)) {
       module.forEach((item) => {
         if (item.path) app.use(item.path, item.router)

@@ -37,14 +37,14 @@ export function author(authorKey = ['createdBy', 'updatedBy']) {
           '__author_plugin_buildDataUpdate'
         )
         this.addBefore(
-          ['update', 'updateOne'],
+          ['createMany', 'create'],
           '__author_plugin_buildDataCreate'
         )
       }
 
       __author_plugin_buildQuery(ctx: FindContext) {
-        if (!ctx.meta.user) return
-        const auth: PermissionHelper = ctx.meta.auth
+        if (!ctx.meta?.user) return
+        const auth: PermissionHelper = ctx.meta?.auth
         if (auth.isAdmin) return
         const [createdByKey] = this.options.authorKey || []
         if (
@@ -75,7 +75,7 @@ export function author(authorKey = ['createdBy', 'updatedBy']) {
       }
 
       __author_plugin_buildData(ctx: UpdateContext) {
-        if (!ctx.meta.user) return
+        if (!ctx.meta?.user) return
         const [, updatedByKey] = this.options.authorKey || []
         if (updatedByKey && !!this.schema.path(updatedByKey)) {
           set(ctx.data, updatedByKey, toMongoId(ctx.meta.user))
@@ -83,7 +83,7 @@ export function author(authorKey = ['createdBy', 'updatedBy']) {
       }
 
       __author_plugin_buildDataCreate(ctx: CreateContext | CreateContextMany) {
-        if (!ctx.meta.user) return
+        if (!ctx.meta?.user) return
         const [createdByKey] = this.options.authorKey || []
         if (createdByKey && !!this.schema.path(createdByKey)) {
           set(ctx.data, createdByKey, toMongoId(ctx.meta.user))

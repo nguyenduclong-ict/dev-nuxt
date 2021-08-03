@@ -92,3 +92,7 @@ sw.*
 # upload
 upload/*
 !upload/.gitkeep
+
+
+# server build
+.build

@@ -1,9 +1,9 @@
 import { PermissionAction, PermissionType } from '@/server/constants'
 import { PermissionHelper } from '@/server/helpers/permission'
 import { cloneDeep } from '@/utils/lodash'
+import { set } from '@/utils/client/vuex'
 import { Getter } from 'vuex/types/index'
 import { adminSidebars, ROUTES, SidebarItem } from '~/config'
-import { set } from '~/utils/client/vuex'
 
 export const state = () => ({
   project: null as any,

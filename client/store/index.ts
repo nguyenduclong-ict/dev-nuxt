@@ -1,6 +1,6 @@
 import { flatMap } from '@/utils/lodash'
 import { Mutation } from 'vuex/types/index'
-import { set } from '~/utils/client/vuex'
+import { set } from '@/utils/client/vuex'
 
 export const state = () => ({
   routes: [],

@@ -1,18 +1,27 @@
 import { resolve } from 'path'
-import { routes as clientRoutes } from './client/config/router'
+import { routes as clientRoutes } from '~/config/router'
 
-export default {
+const isDev = process.env.NODE_ENV === 'development'
+
+/** @type {import('@nuxt/types').NuxtConfig} */
+const nuxtConfig = {
   ssr: false,
   pageTransition: {
     name: 'fade-transform',
     mode: 'out-in',
   },
+
   srcDir: './client',
 
-  alias: {
-    '~': resolve(__dirname, './client'),
-    '@': __dirname,
-  },
+  alias: isDev
+    ? {
+        '~': resolve(__dirname, './client'),
+        '@': __dirname,
+      }
+    : {
+        '~': resolve(__dirname, './client'),
+        '@': resolve(__dirname, './.build'),
+      },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -24,6 +33,11 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [
+      {
+        src: '/js/tinymce/tinymce.min.js',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -51,8 +65,6 @@ export default {
     '@nuxtjs/auth-next',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa',
     'nuxt-i18n',
   ],
 
@@ -136,10 +148,17 @@ export default {
     },
   },
 
-  serverMiddleware: [{ path: '/api', handler: '@/server/_start.js' }],
+  serverMiddleware: [
+    {
+      path: '/api',
+      handler: '@/server/start.js',
+    },
+  ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/^element-ui/],
   },
 }
+
+export default nuxtConfig

@@ -50,6 +50,8 @@ export class UpdateUserPermissionsController extends Controller<Params> {
         }),
       })
 
+      console.log(permissions)
+
       this.res.json({
         ...user.toJSON(),
         permissions,

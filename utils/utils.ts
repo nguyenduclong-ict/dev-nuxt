@@ -243,3 +243,15 @@ export function nonAccentVietnamese(str: string) {
   str = str.replace(/\u02C6|\u0306|\u031B/g, '') // Â, Ê, Ă, Ơ, Ư
   return str
 }
+
+export function fileUrl(file: any) {
+  return (
+    file.url ||
+    location.protocol + '//' + location.host + '/api/file/' + file.name
+  )
+}
+
+export function fileThumbnail(file: any, size: string) {
+  const url = fileUrl(file)
+  return url + '?thumnail=' + size
+}

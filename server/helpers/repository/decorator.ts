@@ -1,9 +1,11 @@
-import { ENTITY_META } from './constants'
+import { ENTITY_META, FIELD_OPTIONS } from './constants'
 
 export interface EntityMeta {}
 
 export interface FieldOptions {
-  editor?: string
+  type?: 'json' | 'Tinymce' | 'FilePicker' | 'ImagePicker' | 'GalleryPicker'
+  label?: string
+  props?: AnyObject
 }
 
 export function Meta(meta: EntityMeta) {
@@ -13,7 +15,7 @@ export function Meta(meta: EntityMeta) {
 }
 
 export function FieldOption(options: FieldOptions) {
-  return function (target: any) {
-    Reflect.defineMetadata(ENTITY_META, target.constructor, options)
+  return function (target: any, key: string) {
+    Reflect.defineMetadata(FIELD_OPTIONS, options, target.constructor, key)
   }
 }

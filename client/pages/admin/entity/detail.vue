@@ -55,7 +55,7 @@
 
     <el-dialog
       :visible.sync="isShowDialogUpdate"
-      :title="`Thêm ${entity.name}`"
+      :title="`Chỉnh sửa ${entity.name}` + (dataUpdate && `: ${dataUpdate.id}`)"
       append-to-body
       custom-class="crud-dialog-create"
       class="crud-dialog-create-wrapper"
@@ -89,9 +89,9 @@ import { ElInput } from 'element-ui/types/input'
 import Vue from 'vue'
 import VueJsonPretty from 'vue-json-pretty'
 import 'vue-json-pretty/lib/styles.css'
+import { buildParams } from '@/utils/client'
 import DataTable from '~/components/Admin/Common/DataTable.vue'
 import Form from '~/components/Admin/Common/Form.vue'
-import { buildParams } from '~/utils/client'
 
 interface Data {
   entity: EntityDeclaration | null
@@ -241,6 +241,13 @@ export default Vue.extend({
           break
 
         default:
+          type = field.type
+          props = {
+            multiple: field.isArray,
+            max: field.max,
+            min: field.min,
+            ...field.props,
+          }
           break
       }
       return { type, props, ...options }
@@ -412,12 +419,12 @@ export default Vue.extend({
             data[item.key] = item.isArray
               ? []
               : item.required
-              ? item.enum[0]
+              ? item.enum?.[0]
               : null
             break
 
           case 'json':
-            data[item.key] = item.required ? item.enum[0] : null
+            data[item.key] = item.required ? item.enum?.[0] : null
             break
 
           default:
@@ -433,6 +440,7 @@ export default Vue.extend({
         pageSize: 10,
         query: {},
         populates: [],
+        sort: ['-createdAt'] as any,
       }
 
       const columns: ColumnItem[] = [
@@ -491,7 +499,7 @@ export default Vue.extend({
                     )
 
                     return v ? (
-                      <el-tag>{v || item.id}</el-tag>
+                      <el-tag>{v || item?.id}</el-tag>
                     ) : (
                       <span
                         class="truncate"
@@ -503,7 +511,7 @@ export default Vue.extend({
                           })
                         }}
                       >
-                        {item.id}
+                        {item?.id}
                       </span>
                     )
                   })}

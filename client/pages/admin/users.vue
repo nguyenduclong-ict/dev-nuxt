@@ -97,10 +97,10 @@ import { toMongoId } from '@nguyenduclong/mongodbts'
 import { cloneDeep } from '@/utils/lodash'
 import { replace } from '@/utils/utils'
 import Vue from 'vue'
+import { equalToField } from '@/utils/client/validate'
 import DataTable from '~/components/Admin/Common/DataTable.vue'
 import Form from '~/components/Admin/Common/Form.vue'
 import { ROUTES } from '~/config'
-import { equalToField } from '~/utils/client/validate'
 
 export default Vue.extend({
   components: { DataTable, Form },

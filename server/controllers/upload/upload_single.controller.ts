@@ -14,6 +14,7 @@ export class UploadSingleController extends Controller<Params> {
         public: true,
         mimetype: this.req.file.mimetype,
         thumbnails: [],
+        size: this.req.file.size,
       },
       meta: this.req.meta,
     })

@@ -33,13 +33,18 @@
     </el-table>
     <el-pagination
       class="mt-2"
-      :total="5"
       :layout="
         ['sm', 'xs'].includes(responsive)
           ? 'total, sizes, ->, prev, pager, next'
           : 'total, sizes, ->, prev, pager, next, jumper'
       "
+      :current-page="payload.page"
+      :page-count="payload.totalPages"
+      :page-sizes="[10, 20, 50, 100]"
+      :page-size="payload.pageSize"
+      :total="payload.total"
       background
+      @current-change="handlePageChange"
     ></el-pagination>
   </div>
 </template>
@@ -125,8 +130,12 @@ const DataTable = Vue.extend({
   },
 
   methods: {
-    async fetchData() {
+    async fetchData(page = 1) {
       const { endpoint, api, _payload } = this
+
+      if (page) {
+        _payload.page = page
+      }
 
       if (!endpoint) return
 
@@ -154,6 +163,7 @@ const DataTable = Vue.extend({
 
       this.data.push(...data)
       Object.assign(this.payload, pagination)
+      this.fetchedCounts++
     },
 
     async handleAction({ row, action }: { row: any; action: any }) {
@@ -206,6 +216,10 @@ const DataTable = Vue.extend({
         updateEndpoint: this.endpoint + '/' + row.id,
         ...(this.api as {}),
       }
+    },
+
+    handlePageChange(page) {
+      this.fetchData(page)
     },
   },
 })

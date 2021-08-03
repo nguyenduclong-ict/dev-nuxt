@@ -21,8 +21,28 @@
         :rules="item.rules"
         :prop="item.key"
       >
+        <Tinymce
+          v-if="item.type === 'Tinymce'"
+          v-model="model[item.key]"
+          v-bind="item.props"
+        />
+        <FilePicker
+          v-else-if="item.type === 'FilePicker'"
+          v-model="model[item.key]"
+          v-bind="item.props"
+        />
+        <ImagePicker
+          v-else-if="item.type === 'ImagePicker'"
+          v-model="model[item.key]"
+          v-bind="item.props"
+        />
+        <GalleryPicker
+          v-else-if="item.type === 'GalleryPicker'"
+          v-model="model[item.key]"
+          v-bind="item.props"
+        />
         <el-input
-          v-if="item.type === 'input'"
+          v-else-if="item.type === 'input'"
           v-model="model[item.key]"
           v-bind="item.props"
           :placeholder="item.placeholder"
@@ -54,11 +74,22 @@
 
 <script>
 import Vue from 'vue'
+import FilePicker from './FilePicker.vue'
+import GalleryPicker from './GalleryPicker.vue'
+import ImagePicker from './ImagePicker.vue'
 import JsonEditor from './JsonEditor.vue'
 import SelectEntity from './SelectEntity.vue'
+import Tinymce from './Tinymce.vue'
 
 export default Vue.extend({
-  components: { SelectEntity, JsonEditor },
+  components: {
+    SelectEntity,
+    JsonEditor,
+    FilePicker,
+    ImagePicker,
+    GalleryPicker,
+    Tinymce,
+  },
   props: {
     model: {
       type: Object,
@@ -71,6 +102,10 @@ export default Vue.extend({
       type: String,
       default: 'elForm',
     },
+  },
+
+  data() {
+    return {}
   },
 
   methods: {
